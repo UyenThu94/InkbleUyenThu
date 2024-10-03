@@ -1,0 +1,22 @@
+[
+  {
+    "nameSite": "SSO Đăng nhập",
+    "linkSite": "https://sso.shopasic.com/login/oauth/authorize?client_id=e083489741c2df439d2e&response_type=code&redirect_uri=https%3A%2F%2Ftestcrm.shopasic.com%2Fcallback&scope=read&state=qigb6utkfr"
+  },
+
+    {
+      "nameSite": "CRM",
+      "linkSite": "https://testcrm.shopasic.com/"
+    },
+
+    { 
+      "nameSite": "Web",
+      "linkSite": "https://luyenstore.myshopify.com/"
+    },
+
+    {
+      "nameSite": "Store",
+      "linkSite": "https://admin.shopify.com/"
+    }
+
+  ]
