@@ -8,7 +8,7 @@ export const dataCancelFulfill = {
     Skucode: 'THS-W12',
 
 // Data Add Product
-    TitleName: 'Product Cancel Fulfill Lần 4 2409 Tshirt 2D',
+    TitleName: 'Product Cancel Fulfill Lần 2 0410 Tshirt 2D',
     FileName: 'tests/BlackTshirt 2D.jpg',
     Option: 'Color',
     Variant: 'Black',

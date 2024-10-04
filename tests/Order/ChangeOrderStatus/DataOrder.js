@@ -22,7 +22,7 @@
     NextItem: '6',
     Skucode: 'THF-S25',
     // Admin - Data Product 
-    TitleName: 'A Product Order Request fulfill lần 4 2709 Tshirt 2D',
+    TitleName: 'A Product Order Request fulfill lần 1 0310 Tshirt 2D',
     Price: '45',
     // Store - Data create order 
     Quantity: '5',
@@ -53,7 +53,7 @@
     NextItem1: '6',
     Skucode1: 'THF-B14',
     // Admin - Data Product 
-    TitleName1: 'A Product Order Mark as fulfill lần 2 2709 Tshirt 2D',
+    TitleName1: 'A Product Order Mark as fulfill lần 2 0310 Tshirt 2D',
     Price1: '45',
     // Store - Data create order 
     Quantity1: '1',
@@ -71,7 +71,7 @@
     NextItem2: '5',
     Skucode2: 'THS-L9',
     // Admin - Data Product 
-    TitleName2: 'A Product Order Sync status lần 2 3009 Tshirt 2D',
+    TitleName2: 'A Product Order Sync status lần 4 0410 Tshirt 2D',
     Price2: "40",
     // Store - Data create order 
     Quantity2: "3",
@@ -92,7 +92,7 @@
     NextItem3: '5',
     Skucode3: 'THS-H24',
     // Admin - Data Product 
-    TitleName3: 'A Product Re Fulfillment lần 2 2709 Tshirt 2D',
+    TitleName3: 'A Product Re Fulfillment lần 7 0410 Tshirt 2D',
     Price3: '67',
     // Store - Data create order 
     Quantity3: '1',

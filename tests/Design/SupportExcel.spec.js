@@ -85,7 +85,7 @@ function SupportExcell () {
     await page.getByRole('button', { name: 'Add', exact: true }).click(); //Click btn Save Product Order
     await page.getByLabel('available quantity').first().fill(dataSupportExcel.Quantity); //Nhập quantity - Màu black (Số lượng item order)
     await page.waitForTimeout(2000);
-    await page.getByPlaceholder('Search or create a customer').click(); //Click search customer
+    await page.getByPlaceholder('Search or create a customer').fill(dataSupportExcel.SelectCustomer); //Click search customer
     await page.getByText(dataSupportExcel.SelectCustomer).click(); // Select Customer đã có trên hệ thống
     await page.getByRole('button', { name: 'Collect payment' }).click(); // Click btn để chọn thanh toán
     await page.getByRole('menuitem', { name: 'Mark as paid' }).click(); //Click Mark as paid để thanh toán order -> Phải Mark as paid ADMIN mới hiển thị order
@@ -148,6 +148,31 @@ function SupportExcell () {
     await page.getByRole('button', { name: 'Get Excel' }).click();
     const download1 = await downloadPromise1;
     await download1.saveAs('tests/Design' + download1.suggestedFilename());
+
+        // Update Status Product - [Drafr]
+        await page.waitForTimeout(1000);
+        await page.goto(dataSiteTest[1].linkSite + "products/list");
+        await page.locator('button:nth-child(2) > .inline-flex').first().click(); //Click Product edit status
+        await page.waitForTimeout(2000);
+        await page.locator('button').filter({ hasText: 'Active' }).click(); //Click btn edit status 
+        await page.locator("(//div[@role='option'])[3]").click(); //Click status Draft 
+        await page.getByRole('button', { name: 'Update Product' }).click(); //Click btn Update Product
+        await page.waitForTimeout(2000);
+        await expect(page.getByText('Update product successfully')).toBeVisible();
+                    // Check list hiển thị status [Drafr]
+        await page.waitForTimeout(1000);
+        await page.keyboard.press('F5');
+        await expect(page.getByText('draft').first()).toBeVisible();
+    
+            // Delete SKU
+        await page.waitForTimeout(1000);
+        await page.getByRole('button', { name: 'Setting' }).click();
+        await page.getByRole('link', { name: 'SKU' }).click();
+        await page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(8)")
+                    .getByRole('button').nth(1).click();
+        await page.getByRole('button', { name: 'Continue' }).click();
+        await page.waitForTimeout(1000);
+        await expect(page.getByText('Delete sku successfully')).toBeVisible();
 
 
         // Read the Excel file

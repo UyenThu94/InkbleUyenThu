@@ -8,7 +8,7 @@ export const dataSupportExcel = {
     Skucode: 'THF-S25',
 
 // Data add product
-    TitleName: 'A Product Support Excel T-shirt 2D lần 3 0310',
+    TitleName: 'A Product Support Excel T-shirt 2D lần 15 0310',
     FileName: 'tests/BlackTshirt 2D.jpg',
     OptionColor: 'Color',
     VariantColor: 'Black',

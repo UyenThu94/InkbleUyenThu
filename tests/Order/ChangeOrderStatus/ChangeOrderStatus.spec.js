@@ -103,6 +103,7 @@ function ActionRequestFulfillment () {
             // Select Customer đã có trên hệ thống
     await page.waitForTimeout(1000);
     await page.getByPlaceholder('Search or create a customer').click(); //Click ô input để chọn Customer 
+    await page.getByPlaceholder('Search or create a customer').fill(dataOrder.SelectCustomer); //Click search customer
     await page.getByText(dataOrder.SelectCustomer).click(); // Select Customer đã có trên hệ thống
     await page.getByRole('button', { name: 'Collect payment' }).click(); // Click btn để chọn thanh toán
     await page.getByRole('menuitem', { name: 'Mark as paid' }).click(); //Click Mark as paid để thanh toán order -> Phải Mark as paid ADMIN mới hiển thị order
@@ -164,13 +165,16 @@ function ActionRequestFulfillment () {
     await page.waitForTimeout(1000);
     await expect(page.getByText('Update product successfully')).toBeVisible();
                 // Check list hiển thị status [Drafr]
-    await page.goto(dataSiteTest[1].linkSite + "products/list")
+    await page.waitForTimeout(1000);
+    await page.keyboard.press('F5');
     await expect(page.getByText('draft').first()).toBeVisible();
 
         // Delete SKU
     await page.waitForTimeout(1000);
-    await page.goto(dataSiteTest[1].linkSite + "setting/sku");
-    await page.locator("(//button[@type='button'])[11]").click();
+    await page.getByRole('button', { name: 'Setting' }).click();
+    await page.getByRole('link', { name: 'SKU' }).click();
+    await page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(8)")
+                .getByRole('button').nth(1).click();
     await page.getByRole('button', { name: 'Continue' }).click();
     await page.waitForTimeout(1000);
     await expect(page.getByText('Delete sku successfully')).toBeVisible();
@@ -258,6 +262,7 @@ function ActionMarkAsFulfill () {
     await page.getByLabel('available quantity').fill(dataOrder.Quantity1); //Nhập quantity (Số lượng item order)
     await page.waitForTimeout(2000);
     await page.getByPlaceholder('Search or create a customer').click(); //Click search customer
+    await page.getByPlaceholder('Search or create a customer').fill(dataOrder.SelectCustomer); //Click search customer
     await page.getByText(dataOrder.SelectCustomer).click(); // Select Customer đã có trên hệ thống
     await page.getByRole('button', { name: 'Collect payment' }).click(); // Click btn để chọn thanh toán
     await page.getByRole('menuitem', { name: 'Mark as paid' }).click(); //Click Mark as paid để thanh toán order -> Phải Mark as paid ADMIN mới hiển thị order
@@ -287,25 +292,17 @@ function ActionMarkAsFulfill () {
     await expect(page.getByRole('cell', { name: dataOrder.TitleName1 }).first()).toBeVisible(); //Check hiển thị title name
     await expect(page.locator("(//div[normalize-space()='mark_fulfilled'])[2]")).toBeVisible(); //Check hiển thị status sau [Mark_fulfilled]
 
-         // Update Status Product - [Drafr]
+                // Check list hiển thị status [Drafr]
     await page.waitForTimeout(1000);
-    await page.goto(dataSiteTest[1].linkSite + "products/list");
-    await expect(page.getByRole('link', { name: dataOrder.TitleName1 })).toBeVisible();
+    await page.keyboard.press('F5');
+    await expect(page.getByText('draft').first()).toBeVisible();
+    
+            // Delete SKU
     await page.waitForTimeout(1000);
-    await page.locator('button:nth-child(2) > .inline-flex').first().click(); //Click Product edit status
-    await page.waitForTimeout(2000);
-    await page.locator('button').filter({ hasText: 'Active' }).click(); //Click btn edit status 
-    await page.locator("(//div[@role='option'])[3]").click(); //Click status Draft 
-    await page.getByRole('button', { name: 'Update Product' }).click(); //Click btn Update Product
-    await expect(page.getByText('Update product successfully')).toBeVisible();
-    await page.waitForTimeout(1000);
-    await page.keyboard.press('F5'); //F5 load lại danh sách
-    await expect(page.getByText('draft').first()).toBeVisible(); // Check list hiển thị status [Drafr]
-
-        // Delete SKU
-    await page.waitForTimeout(1000);
-    await page.goto(dataSiteTest[1].linkSite + "setting/sku");
-    await page.locator("(//button[@type='button'])[11]").click();
+    await page.getByRole('button', { name: 'Setting' }).click();
+    await page.getByRole('link', { name: 'SKU' }).click();
+    await page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(8)")
+                .getByRole('button').nth(1).click();
     await page.getByRole('button', { name: 'Continue' }).click();
     await page.waitForTimeout(1000);
     await expect(page.getByText('Delete sku successfully')).toBeVisible();    
@@ -395,7 +392,7 @@ function ActionSyncStatus () {
     await page.getByRole('button', { name: 'Add', exact: true }).click(); //Click btn Save Product Order
     await page.getByLabel('available quantity').fill(dataOrder.Quantity2); //Nhập số lượng order
     await page.waitForTimeout(2000);
-    await page.getByPlaceholder('Search or create a customer').click(); //Click search customer
+    await page.getByPlaceholder('Search or create a customer').fill(dataOrder.SelectCustomer); //Click search customer
     await page.getByText(dataOrder.SelectCustomer).click(); // Select Customer đã có trên hệ thống
     await page.getByRole('button', { name: 'Collect payment' }).click(); // Click btn để chọn thanh toán
     await page.getByRole('menuitem', { name: 'Mark as paid' }).click(); //Click Mark as paid để thanh toán order -> Phải Mark as paid ADMIN mới hiển thị order
@@ -466,7 +463,6 @@ function ActionSyncStatus () {
 
         // Thao tác action [Sync status]
     await page.waitForTimeout(1000);
-    await page.goto(dataSiteTest[1].linkSite + "order?page=1&limit=20&status=processing"); //Truy cập màn hình Order - Tab processing
     await page.locator("(//button[@role='checkbox'])[2]").click(); //Click Order Request Fulfillment
     await page.locator('#radix-vue-dropdown-menu-trigger-18').getByRole('button', { name: 'Action' }).click(); //Click btn action -> hiển thị tootip 
     await page.waitForTimeout(1000);
@@ -476,7 +472,6 @@ function ActionSyncStatus () {
 
             // Check hiển thị sau khi thao tác action [Sync status]
     await page.waitForTimeout(1000);
-    await page.goto(dataSiteTest[1].linkSite + "order?page=1&limit=20&status=processing"); //Truy cập màn hình Order - Tab processing
     await page.locator('div#__nuxt tr:nth-child(1) > td:nth-child(3) > div > button').click(); //Click ID Order
     await page.waitForTimeout(1000);
     await expect(page.getByText('Status Cancel: cancel-produce').first()).toBeVisible(); //Hiển thị Status Cancel vị trí 1
@@ -492,8 +487,8 @@ function ActionSyncStatus () {
             await expect(nth2RequestAt).toBeVisible(); //Hiển thị nth2RequestAt vị trí 3
 
         // Update Status Product - [Drafr]
-    await page.waitForTimeout(1000);
-    await page.goto(dataSiteTest[1].linkSite + "products/list");
+    await page.getByRole('button', { name: 'Product', exact: true }).click();
+    await page.getByRole('link', { name: 'List' }).click();
     await expect(page.getByRole('link', { name: dataOrder.TitleName2 })).toBeVisible();
     await page.waitForTimeout(1000);
     await page.locator('button:nth-child(2) > .inline-flex').first().click(); //Click Product edit status
@@ -503,17 +498,19 @@ function ActionSyncStatus () {
     await page.getByRole('button', { name: 'Update Product' }).click(); //Click btn Update Product
     await page.waitForTimeout(1000);
     await expect(page.getByText('Update product successfully')).toBeVisible();
+                // Check list hiển thị status [Drafr]
+        await page.keyboard.press('F5');
+        await expect(page.getByText('draft').first()).toBeVisible();
+    
+            // Delete SKU
     await page.waitForTimeout(1000);
-    await page.locator("(//*[name()='svg'][@class='icon w-5 h-5'])[1]").click(); //Click icon load lại danh sách 
-    await expect(page.getByText('draft').first()).toBeVisible(); // Check list hiển thị status [Drafr]
-
-        // Delete SKU
-    await page.waitForTimeout(1000);        
-    await page.goto(dataSiteTest[1].linkSite + "setting/sku");
-    await page.locator("(//button[@type='button'])[11]").click();
+    await page.getByRole('button', { name: 'Setting' }).click();
+    await page.getByRole('link', { name: 'SKU' }).click();
+    await page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(8)")
+                .getByRole('button').nth(1).click();
     await page.getByRole('button', { name: 'Continue' }).click();
     await page.waitForTimeout(1000);
-    await expect(page.getByText('Delete sku successfully')).toBeVisible();    
+    await expect(page.getByText('Delete sku successfully')).toBeVisible();
         
         });
     }
@@ -597,7 +594,8 @@ function ActionReFulfillment () {
     await page.waitForTimeout(2000);
     await page.getByPlaceholder('Search or create a customer').click(); //Click search customer
         // Select Customer đã có trên hệ thống
-    await page.getByText(dataOrder.SelectCustomer).click();
+    await page.getByPlaceholder('Search or create a customer').fill(dataOrder.SelectCustomer); //Click search customer
+    await page.getByText(dataOrder.SelectCustomer).click(); // Select Customer đã có trên hệ thống
         // Click btn để Save Order
     await page.getByRole('button', { name: 'Collect payment' }).click();
     await page.getByRole('menuitem', { name: 'Mark as paid' }).click(); //Click Mark as paid để order -> Phải Mark as paid ADMIN mới hiển thị order
@@ -652,6 +650,7 @@ function ActionReFulfillment () {
         // Check hiển thị order Lỗi tại tab Error
     await page.waitForTimeout(1000);
     await page.goto(dataSiteTest[1].linkSite + "order?page=1&limit=20&status=error"); //Truy cập màn hình order - Tab error
+    await page.keyboard.press('F5');
     await expect(page.getByText(dataOrder.TitleName3).first()).toBeVisible(); //Check hiển thị title name
     await expect(page.locator("(//div[normalize-space()='error'])[2]").first()).toBeVisible(); //Check hiển thị status error
 
@@ -673,18 +672,20 @@ function ActionReFulfillment () {
     await page.waitForTimeout(1000);
     await page.getByRole('button', { name: 'Re fulfill' }).click(); //Click btn Re-Fulfillment
     await page.getByRole('button', { name: 'Continue' }).click(); //Click btn confirmn Re-Fulfillment
+    await page.waitForTimeout(500);
     await expect(page.getByText('Re fulfill successfuly')).toBeVisible();
 
         //  Check hiển thị order tại tab Processing - Sau khi Request Fulfillment thành công
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
     await page.goto(dataSiteTest[1].linkSite + "order?page=1&limit=20&status=processing"); //Truy cập màn hình order - Tab processing
-    await page.keyboard.press('F5'); //F5 load lại trang
-    await expect(page.getByRole('cell', { name: dataOrder.TitleName3 }).first()).toBeVisible(); //Check hiển thị oder 
+    await page.locator('.flex > .inline-flex').first(); //Click  icon load lại trang
+    await expect(page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(4)")
+                        .getByText(dataOrder.TitleName3)).toBeVisible(); //Check hiển thị order
     await expect(page.locator("(//div[normalize-space()='awaiting'])[2]")).toBeVisible(); //Check hiển thị status [awaiting] 
 
-        // Update Status Product - [Drafr]
-    await page.waitForTimeout(1000);
-    await page.goto(dataSiteTest[1].linkSite + "products/list");
+         // Update Status Product - [Drafr]
+    await page.getByRole('button', { name: 'Product', exact: true }).click();
+    await page.getByRole('link', { name: 'List' }).click();
     await expect(page.getByRole('link', { name: dataOrder.TitleName3 })).toBeVisible();
     await page.waitForTimeout(1000);
     await page.locator('button:nth-child(2) > .inline-flex').first().click(); //Click Product edit status
@@ -694,15 +695,17 @@ function ActionReFulfillment () {
     await page.getByRole('button', { name: 'Update Product' }).click(); //Click btn Update Product
     await page.waitForTimeout(1000);
     await expect(page.getByText('Update product successfully')).toBeVisible();
-    await page.waitForTimeout(1000);
-    await page.locator("(//*[name()='svg'][@class='icon w-5 h-5'])[1]").click(); //Click icon load lại danh sách 
-    await expect(page.getByText('draft').first()).toBeVisible(); // Check list hiển thị status [Drafr]
-
-        // Delete SKU
-    await page.goto(dataSiteTest[1].linkSite + "setting/sku");
-    await page.locator("(//button[@type='button'])[11]").click();
+                // Check list hiển thị status [Drafr]
+        await page.keyboard.press('F5');
+        await expect(page.getByText('draft').first()).toBeVisible();
+    
+            // Delete SKU
+    await page.getByRole('button', { name: 'Setting' }).click();
+    await page.getByRole('link', { name: 'SKU' }).click();
+    await page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(8)")
+                .getByRole('button').nth(1).click();
     await page.getByRole('button', { name: 'Continue' }).click();
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
     await expect(page.getByText('Delete sku successfully')).toBeVisible();
 
         });

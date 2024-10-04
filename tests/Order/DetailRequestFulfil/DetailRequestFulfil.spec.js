@@ -101,6 +101,7 @@ function ActionDetailRequestFulfill () {
         await page.getByLabel('available quantity').nth(1).fill(DetailRequestFulfill.QuantityRed); //Nhập quantity - màu red (Số lượng item order)
     await page.waitForTimeout(2000);
     await page.getByPlaceholder('Search or create a customer').click(); //Click search customer
+    await page.getByPlaceholder('Search or create a customer').fill(DetailRequestFulfill.SelectCustomer); //Click search customer
     await page.getByText(DetailRequestFulfill.SelectCustomer).click(); // Select Customer đã có trên hệ thống
     await page.getByRole('button', { name: 'Collect payment' }).click(); // Click btn để chọn thanh toán
     await page.getByRole('menuitem', { name: 'Mark as paid' }).click(); //Click Mark as paid để thanh toán order -> Phải Mark as paid ADMIN mới hiển thị order
@@ -225,28 +226,30 @@ function ActionDetailRequestFulfill () {
         await expect(page.getByText('Status code: awaiting').nth(4)).toBeVisible();
         await expect(page.getByText('Status code: awaiting').nth(5)).toBeVisible();
 
-        // Update Status Product - [Drafr]
-    await page.goto(dataSiteTest[1].linkSite + "products/list");
+         // Update Status Product - [Drafr]
+    await page.getByRole('button', { name: 'Product', exact: true }).click();
+    await page.getByRole('link', { name: 'List' }).click();
+    await expect(page.getByRole('link', { name: DetailRequestFulfill.TitleName })).toBeVisible();
     await page.waitForTimeout(1000);
-    await page.locator('div#__nuxt tr:nth-child(1) > td:nth-child(7) > div > button:nth-child(2) > button').first().click(); //Click Product edit status
-    await page.locator('div#__nuxt div:nth-child(3) > div > button[type=\"button\"]').click(); //Click btn edit status
+    await page.locator('button:nth-child(2) > .inline-flex').first().click(); //Click Product edit status
     await page.waitForTimeout(1000);
+    await page.locator('button').filter({ hasText: 'Active' }).click(); //Click btn edit status 
     await page.locator("(//div[@role='option'])[3]").click(); //Click status Draft 
     await page.getByRole('button', { name: 'Update Product' }).click(); //Click btn Update Product
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
     await expect(page.getByText('Update product successfully')).toBeVisible();
                 // Check list hiển thị status [Drafr]
-    await page.goto(dataSiteTest[1].linkSite + "products/list")
-    await expect(page.getByText('draft').first()).toBeVisible();
-
-        // Delete SKU
-    await page.waitForTimeout(1000);
-    await page.goto(dataSiteTest[1].linkSite + "setting/sku");
-    await page.locator("(//button[@type='button'])[11]").click();
+        await page.keyboard.press('F5');
+        await expect(page.getByText('draft').first()).toBeVisible();
+    
+            // Delete SKU
+    await page.getByRole('button', { name: 'Setting' }).click();
+    await page.getByRole('link', { name: 'SKU' }).click();
+    await page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(8)")
+                .getByRole('button').nth(1).click();
     await page.getByRole('button', { name: 'Continue' }).click();
     await page.waitForTimeout(1000);
     await expect(page.getByText('Delete sku successfully')).toBeVisible();
-
 
                 });
     } 
