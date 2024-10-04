@@ -71,7 +71,8 @@ function AddTemplate () {
     await expect(page.getByText('Create template successfully')).toBeVisible();
                 // Check hiển thị  Template
     await page.goto(dataSiteTest[1].linkSite + "products/list_template");
-    await expect(page.getByText(dataTemplate.TemplateName)).toBeVisible(); //Hiển thị tại list template
+    await expect(page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(1)")
+                        .getByText(dataTemplate.TemplateName)).toBeVisible(); //Hiển thị tại list template
 
         // Xóa template
     await page.goto(dataSiteTest[1].linkSite + "products/list_template");
@@ -79,7 +80,8 @@ function AddTemplate () {
     await page.getByText('Continue').click();
     await expect(page.getByText('Delete template successfully')).toBeVisible();
     await page.goto(dataSiteTest[1].linkSite + "products/list_template"); //Truy cập list_template
-    await expect(page.getByText(dataTemplate.TemplateName)).not.toBeVisible(); // Check hiển thị List Template - Sau xóa template
+    await expect(page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(1)")
+                        .getByText(dataTemplate.TemplateName)).not.toBeVisible(); // Check hiển thị List Template - Sau xóa template
     
         });
     } 
@@ -119,7 +121,8 @@ function AddTemplateProductID () {
     await expect(page.getByText('Create template successfully')).toBeVisible();
         // Check hiển thị  Template
     await page.goto(dataSiteTest[1].linkSite + "products/list_template");
-    await expect(page.getByText(dataTemplate.TemplateName1)).toBeVisible(); //Hiển thị tại list template
+    await expect(page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(1)")
+                        .getByText(dataTemplate.TemplateName1)).toBeVisible(); //Hiển thị tại list template
 
         // Xóa template
     await page.goto(dataSiteTest[1].linkSite + "products/list_template");
@@ -128,7 +131,8 @@ function AddTemplateProductID () {
     await expect(page.getByText('Delete template successfully')).toBeVisible();
         // Check hiển thị List Template - Sau xóa template
     await page.goto(dataSiteTest[1].linkSite + "products/list_template");
-    await expect(page.getByText(dataTemplate.TemplateName1)).not.toBeVisible();
+    await expect(page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(1)")
+                    .getByText(dataTemplate.TemplateName1)).not.toBeVisible();
 
         });
     } 
@@ -170,7 +174,8 @@ function AddTemplateProductIDAutoSync () {
     await expect(page.getByText('Create template successfully')).toBeVisible();
         // Check hiển thị  Template
     await page.goto(dataSiteTest[1].linkSite + "products/list_template");
-    await expect(page.getByText(dataTemplate.TemplateName2)).toBeVisible(); //Hiển thị tại list template
+    await expect(page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(1)")
+                        .getByText(dataTemplate.TemplateName2)).toBeVisible(); //Hiển thị tại list template
     
         // Xóa template
     await page.goto(dataSiteTest[1].linkSite + "products/list_template");
@@ -179,7 +184,8 @@ function AddTemplateProductIDAutoSync () {
     await expect(page.getByText('Delete template successfully')).toBeVisible();
         // Check hiển thị List Template - Sau xóa template
     await page.goto(dataSiteTest[1].linkSite + "products/list_template");
-    await expect(page.getByText(dataTemplate.TemplateName2)).not.toBeVisible();
+    await expect(page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(1)")
+                        .getByText(dataTemplate.TemplateName2)).not.toBeVisible();
 
         });
     } 

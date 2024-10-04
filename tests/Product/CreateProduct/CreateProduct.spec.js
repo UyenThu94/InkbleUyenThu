@@ -39,8 +39,8 @@ function CreateProduct () {
                 // Chọn ảnh sản phẩm - Red   
     const fileChooserPromise1 = page.waitForEvent('filechooser');
     await page.getByRole('button', { name: 'Add', exact: true }).click(); 
-    const fileChooser1 = await fileChooserPromise;
-    await fileChooser.setFiles(dataProduct.FileName1);  
+    const fileChooser1 = await fileChooserPromise1;
+    await fileChooser1.setFiles(dataProduct.FileName1);  
                 // Nhập Variants - Size
     await page.getByRole('button', { name: 'Add variant' }).click();
     await page.getByPlaceholder('Option name').fill(dataProduct.OptionS);
@@ -293,8 +293,9 @@ test('Create Product Template Fixed', async ({ page }) => {
     await page.waitForTimeout(1000);
     await page.locator('#AppFrameScrollable').getByRole('button', { name: 'Save' }).click(); //Click btn Save
     await page.getByRole('button', { name: 'Save product' }).click(); //Click btn Save product
-    await page.waitForTimeout(1000);
-    await expect(page.getByText('Product saved')).toBeVisible();
+    await page.waitForTimeout(2000);
+    await expect(page.locator('.Polaris-Frame-Toast')
+                        .getByText('Product saved')).toBeVisible();    
     
         });
     }
@@ -431,8 +432,9 @@ test('Create Product Template Auto sync', async ({ page }) => {
     await page.waitForTimeout(1000);
     await page.locator('#AppFrameScrollable').getByRole('button', { name: 'Save' }).click(); //Click btn Save
     await page.getByRole('button', { name: 'Save product' }).click(); //Click btn Save product
-    await page.waitForTimeout(1000);
-    await expect(page.getByText('Product saved')).toBeVisible();    
+    await page.waitForTimeout(2000);
+    await expect(page.locator('.Polaris-Frame-Toast')
+                        .getByText('Product saved')).toBeVisible();    
 
         });
     }

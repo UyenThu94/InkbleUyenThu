@@ -22,7 +22,7 @@
     NextItem: '6',
     Skucode: 'THF-S25',
     // Admin - Data Product 
-    TitleName: 'A Product Order Request fulfill lần 1 0310 Tshirt 2D',
+    TitleName: 'A Product Order Request fulfill lần 2 0310 Tshirt 2D',
     Price: '45',
     // Store - Data create order 
     Quantity: '5',

@@ -16,7 +16,7 @@ export const dataProduct = {
  * Case 1: Data Create Product
  */
 // Title
-    Title: 'Product Tshirt 2D 2709',
+    Title: 'Product Tshirt 2D 0410',
 // Data Variant - Option Size
     OptionS: 'Size',
     VariantS1: 'M',
@@ -32,23 +32,23 @@ export const dataProduct = {
  * Case 2: Data Create Product ID
  */ 
 // Nhập title 
-    Title1: 'Product ID Embroidered Sweetshirt 2709',
+    Title1: 'Product ID Embroidered Sweetshirt 0410',
 
 /**
  * Case 3: Data Create Product Template fixed 
  */ 
 // Nhập tên template
-    TemplateName: 'Template Tshirt 2D Fixed 2709',
+    TemplateName: 'Template Tshirt 2D Fixed 0410',
 // Nhập title
-    Title2: 'Product Fixed Embroidered Sweetshirt 2709',
+    Title2: 'Product Fixed Embroidered Sweetshirt 0410',
 
 /**
  * Case 4: Data Create Product Template Auto sync 
  */ 
 // Nhập tên template 
-    TemplateName1: 'Template Embroidered Sweetshirt Auto sync 2709',
+    TemplateName1: 'Template Embroidered Sweetshirt Auto sync 0410',
 // Nhập title
-    Title3: 'Product Autosync Embroidered Sweetshirt 2709',
+    Title3: 'Product Autosync Embroidered Sweetshirt 0410',
 
 /**
  * Case 5: Pass -> Tạo template - Từ Catalog
@@ -56,7 +56,7 @@ export const dataProduct = {
 // Search product tại Catalog 
     ProductCatalog: 'Stainless Steel Tumbler 30oz',
 // Nhập title
-    Title4: 'Product Catalog Stainless Steel Tumbler 30oz 2709 ',
+    Title4: 'Product Catalog Stainless Steel Tumbler 30oz 0410 ',
 // Nhập giá 
     Gia1: '45',
 

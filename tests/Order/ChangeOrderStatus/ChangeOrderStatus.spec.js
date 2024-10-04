@@ -684,6 +684,7 @@ function ActionReFulfillment () {
     await expect(page.locator("(//div[normalize-space()='awaiting'])[2]")).toBeVisible(); //Check hiển thị status [awaiting] 
 
          // Update Status Product - [Drafr]
+    await page.waitForTimeout(1000);
     await page.getByRole('button', { name: 'Product', exact: true }).click();
     await page.getByRole('link', { name: 'List' }).click();
     await expect(page.getByRole('link', { name: dataOrder.TitleName3 })).toBeVisible();

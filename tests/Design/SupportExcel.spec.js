@@ -90,13 +90,15 @@ function SupportExcell () {
     await page.getByRole('button', { name: 'Collect payment' }).click(); // Click btn để chọn thanh toán
     await page.getByRole('menuitem', { name: 'Mark as paid' }).click(); //Click Mark as paid để thanh toán order -> Phải Mark as paid ADMIN mới hiển thị order
     await page.getByRole('button', { name: 'Create order' }).click(); //Click btn Create order
+    await page.waitForTimeout(1000);
     await expect(page.locator('span').filter({ hasText: 'Order created' })).toBeVisible();
 
         // Truy cập admin thao tác Detail Request Fulfill
                 // Check hiển thị sau khi store order tại tab All
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
     await page.goto(dataSiteTest[1].linkSite + "order?page=1&limit=20&status=all"); //Truy cập màn hình Order - Tab All);
-    await expect(page.getByRole('cell', { name: dataSupportExcel.TitleName }).first()).toBeVisible(); //Check title order
+    await expect(page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(4)")
+                        .getByText(dataSupportExcel.TitleName)).toBeVisible(); //Check title order
         
                 // Add design 
     await page.waitForTimeout(1000);
@@ -124,7 +126,8 @@ function SupportExcell () {
                     //  Check hiển thị order tại tab Processing - Sau khi Request Fulfillment thành công
     await page.waitForTimeout(1000);
     await page.goto(dataSiteTest[1].linkSite + "order?page=1&limit=20&status=processing"); //Truy cập màn hình Order - Tab processing
-    await expect(page.getByRole('cell', { name: dataSupportExcel.TitleName }).first()).toBeVisible(); //Check title order item 1
+    await expect(page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(4)")
+                        .getByText(dataSupportExcel.TitleName)).toBeVisible(); //Check title order item 1
     
                     // Download file excel 
     await page.waitForTimeout(1000);
@@ -148,32 +151,6 @@ function SupportExcell () {
     await page.getByRole('button', { name: 'Get Excel' }).click();
     const download1 = await downloadPromise1;
     await download1.saveAs('tests/Design' + download1.suggestedFilename());
-
-        // Update Status Product - [Drafr]
-        await page.waitForTimeout(1000);
-        await page.goto(dataSiteTest[1].linkSite + "products/list");
-        await page.locator('button:nth-child(2) > .inline-flex').first().click(); //Click Product edit status
-        await page.waitForTimeout(2000);
-        await page.locator('button').filter({ hasText: 'Active' }).click(); //Click btn edit status 
-        await page.locator("(//div[@role='option'])[3]").click(); //Click status Draft 
-        await page.getByRole('button', { name: 'Update Product' }).click(); //Click btn Update Product
-        await page.waitForTimeout(2000);
-        await expect(page.getByText('Update product successfully')).toBeVisible();
-                    // Check list hiển thị status [Drafr]
-        await page.waitForTimeout(1000);
-        await page.keyboard.press('F5');
-        await expect(page.getByText('draft').first()).toBeVisible();
-    
-            // Delete SKU
-        await page.waitForTimeout(1000);
-        await page.getByRole('button', { name: 'Setting' }).click();
-        await page.getByRole('link', { name: 'SKU' }).click();
-        await page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(8)")
-                    .getByRole('button').nth(1).click();
-        await page.getByRole('button', { name: 'Continue' }).click();
-        await page.waitForTimeout(1000);
-        await expect(page.getByText('Delete sku successfully')).toBeVisible();
-
 
         // Read the Excel file
         const workbook = new ExcelJS.Workbook();
@@ -210,7 +187,32 @@ function SupportExcell () {
             console.error('Error reading file:', err);
         }
 
-  
+            // Update Status Product - [Drafr]
+    await page.waitForTimeout(1000);
+    await page.goto(dataSiteTest[1].linkSite + "products/list");
+    await page.locator('button:nth-child(2) > .inline-flex').first().click(); //Click Product edit status
+    await page.waitForTimeout(2000);
+    await page.locator('button').filter({ hasText: 'Active' }).click(); //Click btn edit status 
+    await page.locator("(//div[@role='option'])[3]").click(); //Click status Draft 
+    await page.getByRole('button', { name: 'Update Product' }).click(); //Click btn Update Product
+    await page.waitForTimeout(1000);
+    await expect(page.getByText('Update product successfully')).toBeVisible();
+                // Check list hiển thị status [Drafr]
+    await page.waitForTimeout(1000);
+    await page.keyboard.press('F5');
+    await expect(page.getByText('draft').first()).toBeVisible();
+
+        // Delete SKU
+    await page.waitForTimeout(1000);
+    await page.getByRole('button', { name: 'Setting' }).click();
+    await page.getByRole('link', { name: 'SKU' }).click();
+    await page.locator("div#__nuxt tr:nth-child(1) > td:nth-child(8)")
+                .getByRole('button').nth(1).click();
+    await page.getByRole('button', { name: 'Continue' }).click();
+    await page.waitForTimeout(1000);
+    await expect(page.getByText('Delete sku successfully')).toBeVisible();
+
+
         });
     };
 
